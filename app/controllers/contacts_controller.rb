@@ -4,7 +4,7 @@ class ContactsController < ApplicationController
 
   # GET /contacts
   def index
-    @contacts = Contact.all
+    @contacts = current_user.contacts.all
     render json: @contacts
   end
 
@@ -15,7 +15,7 @@ class ContactsController < ApplicationController
 
   # POST /contacts
   def create
-    @contact = Contact.new(contact_params)
+    @contact = current_user.contacts.new(contact_params)
 
     if @contact.save
       render json: @contact, status: :created, location: @contact
@@ -41,7 +41,9 @@ class ContactsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contact
-      @contact = Contact.find(params[:id])
+      @contact = current_user.contacts.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: 'Contact not found' }, status: :not_found
     end
 
     # Only allow a list of trusted parameters through.
