@@ -1,22 +1,36 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-Contact.create([
-  { name: "Alice Johnson", phno: "+911234567890" },
-  { name: "Bob Smith", phno: "+912345678901" },
-  { name: "Charlie Brown", phno: "+913456789012" },
-  { name: "David Wilson", phno: "+914567890123" },
-  { name: "Ella White", phno: "+915678901234" },
-  { name: "Frank Thompson", phno: "+916789012345" },
-  { name: "Grace Lee", phno: "+917890123456" },
-  { name: "Henry Miller", phno: "+918901234567" },
-  { name: "Ivy Harris", phno: "+919012345678" },
-  { name: "Jack Clark", phno: "+910123456789" }
-])
+# # db/seeds.rb
 
+# # Clear existing data
+# User.destroy_all
+# Contact.destroy_all
+
+# # Create users
+# users = User.create!([
+#   { email: 'user10@user.com', password: 'password123' },
+#   { email: 'user11@user.com', password: 'password123' },
+#   { email: 'user12@user.com', password: 'password123' },
+#   { email: 'user13@user.com', password: 'password123' },
+#   { email: 'user14@user.com', password: 'password123' }
+# ])
+
+# # Create contacts for each user (at least 50 contacts in total)
+# contact_names = [
+#   'Liam', 'Olivia', 'Noah', 'Emma', 'Oliver', 'Ava', 'Elijah', 'Sophia',
+#   'William', 'Isabella', 'James', 'Mia', 'Benjamin', 'Evelyn', 'Lucas', 'Harper',
+#   'Henry', 'Camila', 'Alexander', 'Gianna', 'Sebastian', 'Luna', 'Jack', 'Lily',
+#   'Jackson', 'Amelia', 'Mateo', 'Hazel', 'Daniel', 'Aria', 'Michael', 'Zoe',
+#   'Mason', 'Elizabeth', 'Ethan', 'Ellie', 'Logan', 'Grace', 'Elijah', 'Hannah',
+#   'Aiden', 'Ivy', 'Owen', 'Ellie', 'Samuel', 'Avery', 'Jacob', 'Scarlett',
+#   'Levi', 'Victoria'
+# ]
+
+# users.each_with_index do |user, index|
+#   10.times do |i|
+#     user.contacts.create!(
+#       name: contact_names[index * 10 + i],
+#       phno: "+91 12345678#{index}#{i}"
+#     )
+#   end
+# end
+
+# puts "Seed data created successfully!"
