@@ -46,4 +46,5 @@ group :development do
 end
 
 gem 'devise-jwt'
-# gem 'pry', '~> 0.13.1'
+
+gem 'pry', '~> 0.15.0'
