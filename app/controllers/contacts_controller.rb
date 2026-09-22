@@ -5,12 +5,12 @@ class ContactsController < ApplicationController
   # GET /contacts
   def index
     @contacts = current_user.contacts.all
-    render json: @contacts
+    render json: @contacts.map { |contact| contact_json(contact) }
   end
 
   # GET /contacts/1
   def show
-    render json: @contact
+    render json: contact_json(@contact)
   end
 
   # POST /contacts
@@ -18,7 +18,7 @@ class ContactsController < ApplicationController
     @contact = current_user.contacts.new(contact_params)
 
     if @contact.save
-      render json: @contact, status: :created, location: @contact
+      render json: contact_json(@contact), status: :created, location: @contact
     else
       render json: @contact.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class ContactsController < ApplicationController
   # PATCH/PUT /contacts/1
   def update
     if @contact.update(contact_params)
-      render json: @contact
+      render json: contact_json(@contact)
     else
       render json: @contact.errors, status: :unprocessable_entity
     end
@@ -48,6 +48,17 @@ class ContactsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def contact_params
-      params.require(:contact).permit(:name, :phno)
+      params.require(:contact).permit(:name, :phno, :photo)
+    end
+
+    def contact_json(contact)
+      contact.as_json.merge(
+        "photo" => if contact.photo.attached?
+                    {
+                      "signed_id" => contact.photo.signed_id,
+                      "filename" => contact.photo.filename.to_s
+                    }
+                  end
+      )
     end
 end
