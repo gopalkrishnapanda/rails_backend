@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   # Nest contacts under users
   resources :users do
     resources :contacts
+    resources :groups do
+      delete "contacts/:contact_id", to: "groups#remove_contact", as: :remove_contact
+    end
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
